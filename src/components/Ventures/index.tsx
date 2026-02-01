@@ -67,7 +67,7 @@ export default function Ventures() {
             className="group block"
             variants={item}
           >
-            <div className="relative p-8 rounded-2xl bg-cyber-card/40 backdrop-blur-xl border border-cyber-border hover:border-cyber-accent/50 transition-all duration-300 overflow-hidden h-full">
+            <span className="block relative p-8 rounded-2xl bg-cyber-card/40 backdrop-blur-xl border border-cyber-border hover:border-cyber-accent/50 transition-all duration-300 overflow-hidden h-full">
               {/* Glass overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyber-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -133,7 +133,7 @@ export default function Ventures() {
                   index === 0 ? "bg-cyber-accent" : "bg-cyber-cyan"
                 } transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left`}
               />
-            </div>
+            </span>
           </motion.a>
         ))}
       </motion.div>

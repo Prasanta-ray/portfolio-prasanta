@@ -94,7 +94,7 @@ export default function Projects() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
               >
-                <div className="p-6 rounded-2xl bg-cyber-card/40 backdrop-blur-xl border border-cyber-border hover:border-cyber-accent/30 transition-all h-full">
+                <span className="block p-6 rounded-2xl bg-cyber-card/40 backdrop-blur-xl border border-cyber-border hover:border-cyber-accent/30 transition-all h-full">
                   <div className="flex items-start justify-between gap-4 mb-3">
                     <div className="flex items-center gap-3">
                       <Github className="w-6 h-6 text-cyber-accent flex-shrink-0" />
@@ -123,7 +123,7 @@ export default function Projects() {
                       <Loader2 className="w-4 h-4 animate-spin" />
                     )}
                   </div>
-                </div>
+                </span>
               </motion.a>
             );
           })}
