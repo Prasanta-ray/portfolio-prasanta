@@ -28,7 +28,7 @@ export default function Ventures() {
   return (
     <section
       id="ventures"
-      className="relative py-24 px-6 bg-cyber-surface overflow-hidden"
+      className="relative py-24 px-6 bg-cyber-surface overflow-hidden scroll-mt-20"
     >
       {/* Section header */}
       <motion.div

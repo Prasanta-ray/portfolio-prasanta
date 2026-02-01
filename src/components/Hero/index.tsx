@@ -12,7 +12,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen w-full overflow-hidden bg-cyber-dark flex flex-col justify-center"
+      className="relative min-h-screen w-full overflow-hidden bg-cyber-dark flex flex-col justify-center scroll-mt-20"
     >
       {/* Grid background */}
       <div

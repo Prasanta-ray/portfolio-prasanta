@@ -31,3 +31,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+EXECUTION_GAP_ANALYSIS.md
+AI_CONTEXT.md

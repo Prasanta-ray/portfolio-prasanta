@@ -22,6 +22,12 @@ body {
   padding: 0;
 }
 
+/* Focus states for accessibility */
+*:focus-visible {
+  outline: 2px solid #00ff88;
+  outline-offset: 2px;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

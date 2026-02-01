@@ -45,7 +45,7 @@ export default function Journal() {
   return (
     <section
       id="journal"
-      className="relative py-24 px-6 bg-cyber-dark overflow-hidden"
+      className="relative py-24 px-6 bg-cyber-dark overflow-hidden scroll-mt-20"
     >
       {/* Section header */}
       <motion.div
