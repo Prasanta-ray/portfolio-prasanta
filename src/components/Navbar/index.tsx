@@ -49,7 +49,7 @@ export default function Navbar() {
             className="flex items-center gap-2 group"
             onClick={() => setMobileOpen(false)}
           >
-            <div className="relative w-9 h-9 rounded-lg overflow-hidden ring-2 ring-cyber-accent/30 group-hover:ring-cyber-accent transition-all">
+            <span className="relative w-9 h-9 rounded-lg overflow-hidden ring-2 ring-cyber-accent/30 group-hover:ring-cyber-accent transition-all">
               <Image
                 src="/profile.png"
                 alt="Prasanta Ray"
