@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build: .
+    container_name: prasanta_portfolio
+    restart: always
+    ports:
+      # HOST:CONTAINER
+      # We use 3001 on the host because 3000 is taken by your main website
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - internal_net
+
+networks:
+  internal_net:
+    external: true
+    # Ensure this matches your actual network name in Portainer
+    name: codelith-core-services_internal_net
