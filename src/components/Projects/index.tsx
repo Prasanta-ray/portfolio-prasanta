@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Github, ExternalLink, Star, Loader2 } from "lucide-react";
+import { Github, ExternalLink, Star } from "lucide-react";
 import { projects } from "@/constants/data";
 
 interface RepoData {
@@ -120,7 +120,9 @@ export default function Projects() {
                         )}
                       </>
                     ) : (
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span className="text-gray-500 text-xs">
+                        Stats unavailable
+                      </span>
                     )}
                   </div>
                 </span>

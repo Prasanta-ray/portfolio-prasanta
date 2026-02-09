@@ -59,15 +59,12 @@ export default function Ventures() {
         viewport={{ once: true }}
       >
         {ventures.map((venture, index) => (
-          <motion.a
+          <motion.div
             key={venture.id}
-            href={venture.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block"
+            className="group"
             variants={item}
           >
-            <span className="block relative p-8 rounded-2xl bg-cyber-card/40 backdrop-blur-xl border border-cyber-border hover:border-cyber-accent/50 transition-all duration-300 overflow-hidden h-full">
+            <div className="relative p-8 rounded-2xl bg-cyber-card/40 backdrop-blur-xl border border-cyber-border hover:border-cyber-accent/50 transition-all duration-300 overflow-hidden h-full">
               {/* Glass overlay gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyber-accent/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -86,7 +83,15 @@ export default function Ventures() {
                     </h3>
                   </div>
                 </div>
-                <ExternalLink className="w-5 h-5 text-gray-500 group-hover:text-cyber-accent transition-colors" />
+                <a
+                  href={venture.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-gray-400 hover:text-cyber-accent transition-colors text-sm"
+                >
+                  Visit site
+                  <ExternalLink className="w-4 h-4" />
+                </a>
               </div>
 
               {/* Role */}
@@ -97,7 +102,6 @@ export default function Ventures() {
               <div className="space-y-3 text-sm">
                 <a
                   href={`mailto:${venture.contact.email}`}
-                  onClick={(e) => e.stopPropagation()}
                   className="flex items-center gap-2 text-gray-400 hover:text-cyber-accent transition-colors"
                 >
                   <Mail className="w-4 h-4 flex-shrink-0" />
@@ -105,7 +109,6 @@ export default function Ventures() {
                 </a>
                 <a
                   href={`tel:${venture.contact.phone.replace(/\s/g, "")}`}
-                  onClick={(e) => e.stopPropagation()}
                   className="flex items-center gap-2 text-gray-400 hover:text-cyber-accent transition-colors"
                 >
                   <Phone className="w-4 h-4 flex-shrink-0" />
@@ -115,7 +118,6 @@ export default function Ventures() {
                   href={venture.contact.discord}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
                   className="flex items-center gap-2 text-gray-400 hover:text-cyber-accent transition-colors"
                 >
                   <MessageCircle className="w-4 h-4 flex-shrink-0" />
@@ -133,8 +135,8 @@ export default function Ventures() {
                   index === 0 ? "bg-cyber-accent" : "bg-cyber-cyan"
                 } transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left`}
               />
-            </span>
-          </motion.a>
+            </div>
+          </motion.div>
         ))}
       </motion.div>
     </section>

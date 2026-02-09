@@ -17,7 +17,8 @@ interface GitHubIssue {
 
 async function fetchJournalPosts(): Promise<GitHubIssue[]> {
   try {
-    const url = `https://api.github.com/repos/${journalConfig.owner}/${journalConfig.repo}/issues?state=open&labels=journal&per_page=10&sort=created`;
+    const labels = journalConfig.labels.join(",");
+    const url = `https://api.github.com/repos/${journalConfig.owner}/${journalConfig.repo}/issues?state=open&labels=${labels}&per_page=10&sort=created`;
     const res = await fetch(url, {
       headers: {
         Accept: "application/vnd.github.v3+json",

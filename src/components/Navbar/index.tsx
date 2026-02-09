@@ -58,7 +58,7 @@ export default function Navbar() {
                 sizes="36px"
                 priority
               />
-            </div>
+            </span>
             <span className="font-bold text-white font-mono hidden sm:inline">
               Prasanta Ray
             </span>

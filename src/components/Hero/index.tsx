@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
-import Link from "next/link";
 import dynamic from "next/dynamic";
 import { profile } from "@/constants/data";
 
@@ -77,24 +76,22 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
             >
-              <Link href="#ventures">
-                <motion.button
-                  className="px-6 py-3 rounded-lg bg-cyber-accent text-cyber-dark font-semibold hover:bg-cyber-accentDim transition-colors shadow-cyber"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Explore Ventures
-                </motion.button>
-              </Link>
-              <Link href="#journal">
-                <motion.button
-                  className="px-6 py-3 rounded-lg bg-cyber-card/80 backdrop-blur-md border border-cyber-border text-cyber-accent font-semibold hover:bg-cyber-card transition-colors"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Read Journal
-                </motion.button>
-              </Link>
+              <motion.a
+                href="#ventures"
+                className="px-6 py-3 rounded-lg bg-cyber-accent text-cyber-dark font-semibold hover:bg-cyber-accentDim transition-colors shadow-cyber"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Explore Ventures
+              </motion.a>
+              <motion.a
+                href="#journal"
+                className="px-6 py-3 rounded-lg bg-cyber-card/80 backdrop-blur-md border border-cyber-border text-cyber-accent font-semibold hover:bg-cyber-card transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Read Journal
+              </motion.a>
             </motion.div>
           </motion.div>
 
