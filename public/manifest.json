@@ -1,0 +1,25 @@
+{
+  "name": "Prasanta Ray — Portfolio",
+  "short_name": "Prasanta Ray",
+  "description": "Founder & CEO of Code Lith Labs | Backend Researcher | CSE Student at CIT Kokrajhar",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#00ff88",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["portfolio", "technology", "developer"]
+}

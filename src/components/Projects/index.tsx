@@ -3,60 +3,33 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Github, ExternalLink, Star } from "lucide-react";
-import { projects } from "@/constants/data";
-
-interface RepoData {
-  stargazers_count: number;
-  forks_count: number;
-  description: string | null;
-  language: string | null;
-}
-
-async function fetchRepoData(
-  owner: string,
-  repo: string
-): Promise<RepoData | null> {
-  try {
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}`,
-      {
-        headers: { Accept: "application/vnd.github.v3+json" },
-        next: { revalidate: 3600 },
-      }
-    );
-    if (!res.ok) return null;
-    const data = await res.json();
-    return {
-      stargazers_count: data.stargazers_count ?? 0,
-      forks_count: data.forks_count ?? 0,
-      description: data.description ?? null,
-      language: data.language ?? null,
-    };
-  } catch {
-    return null;
-  }
-}
+import { getRepositories } from "@/app/actions";
+import type { GitHubRepo } from "@/lib/github";
 
 export default function Projects() {
-  const [repoData, setRepoData] = useState<Record<string, RepoData | null>>({});
+  const [repos, setRepos] = useState<GitHubRepo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all(
-      projects.map(async (p) => {
-        const data = await fetchRepoData(p.owner, p.repo);
-        return { key: p.id, data };
-      })
-    ).then((results) => {
-      const map: Record<string, RepoData | null> = {};
-      results.forEach(({ key, data }) => (map[key] = data));
-      setRepoData(map);
-    });
+    async function fetchData() {
+      try {
+        const data = await getRepositories();
+        setRepos(data);
+      } catch (error) {
+        console.error("Failed to fetch repositories:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
   }, []);
 
   return (
     <section
       id="projects"
       className="relative py-24 px-6 bg-cyber-dark overflow-hidden scroll-mt-20"
+      aria-labelledby="projects-heading"
     >
       {/* Section header */}
       <motion.div
@@ -69,7 +42,10 @@ export default function Projects() {
         <span className="inline-block px-4 py-2 rounded-full bg-cyber-card/80 border border-cyber-border text-cyber-accent font-mono text-sm mb-4">
           PROJECTS
         </span>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h2
+          id="projects-heading"
+          className="text-4xl md:text-5xl font-bold text-white mb-4"
+        >
           Built with <span className="text-cyber-accent">Code</span>
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
@@ -79,13 +55,11 @@ export default function Projects() {
 
       <div className="container mx-auto max-w-5xl">
         <div className="grid md:grid-cols-2 gap-6">
-          {projects.map((project, i) => {
-            const data = repoData[project.id];
-            const desc = data?.description ?? project.description;
-            return (
+          {repos.length > 0 ? (
+            repos.map((repo, i) => (
               <motion.a
-                key={project.id}
-                href={project.url}
+                key={repo.id}
+                href={repo.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group block"
@@ -99,36 +73,62 @@ export default function Projects() {
                     <div className="flex items-center gap-3">
                       <Github className="w-6 h-6 text-cyber-accent flex-shrink-0" />
                       <h3 className="text-lg font-bold text-white group-hover:text-cyber-accent transition-colors">
-                        {project.name}
+                        {repo.name}
                       </h3>
                     </div>
                     <ExternalLink className="w-5 h-5 text-gray-500 group-hover:text-cyber-accent transition-colors flex-shrink-0" />
                   </div>
                   <p className="text-gray-400 text-sm mb-4 line-clamp-2">
-                    {desc}
+                    {repo.description || "No description available"}
                   </p>
                   <div className="flex items-center gap-4 text-sm text-gray-500">
-                    {data ? (
-                      <>
-                        <span className="flex items-center gap-1">
-                          <Star className="w-4 h-4 text-cyber-amber" />
-                          {data.stargazers_count}
-                        </span>
-                        <span>{data.forks_count} forks</span>
-                        {data.language && (
-                          <span className="text-cyber-cyan">{data.language}</span>
-                        )}
-                      </>
-                    ) : (
-                      <span className="text-gray-500 text-xs">
-                        Stats unavailable
-                      </span>
+                    <span className="flex items-center gap-1">
+                      <Star className="w-4 h-4 text-cyber-amber" />
+                      {repo.stargazers_count}
+                    </span>
+                    <span>{repo.forks_count} forks</span>
+                    {repo.language && (
+                      <span className="text-cyber-cyan">{repo.language}</span>
                     )}
                   </div>
                 </span>
               </motion.a>
-            );
-          })}
+            ))
+          ) : isLoading ? (
+            /* Skeleton loading cards */
+            Array.from({ length: 6 }).map((_, i) => (
+              <motion.div
+                key={`skeleton-${i}`}
+                className="p-6 rounded-2xl bg-cyber-card/40 border border-cyber-border h-[180px]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-6 h-6 rounded bg-cyber-border animate-pulse" />
+                  <div className="h-5 w-40 rounded bg-cyber-border animate-pulse" />
+                </div>
+                <div className="h-4 w-full rounded bg-cyber-border/60 animate-pulse mb-2" />
+                <div className="h-4 w-2/3 rounded bg-cyber-border/60 animate-pulse mb-4" />
+                <div className="flex gap-4">
+                  <div className="h-4 w-12 rounded bg-cyber-border/40 animate-pulse" />
+                  <div className="h-4 w-16 rounded bg-cyber-border/40 animate-pulse" />
+                  <div className="h-4 w-14 rounded bg-cyber-border/40 animate-pulse" />
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <motion.div
+              className="col-span-full text-center py-12"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              <p className="text-gray-400">
+                Unable to load projects. Please try again later.
+              </p>
+            </motion.div>
+          )}
         </div>
       </div>
     </section>

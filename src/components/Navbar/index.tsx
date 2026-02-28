@@ -1,9 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
 
 const navLinks = [
@@ -20,12 +19,49 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("#hero");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Scroll-spy: track which section is currently in view
+  useEffect(() => {
+    const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length > 0) {
+          // Pick the one closest to the top of the viewport
+          const top = visible.reduce((a, b) =>
+            a.boundingClientRect.top < b.boundingClientRect.top ? a : b
+          );
+          setActiveSection(`#${top.target.id}`);
+        }
+      },
+      { rootMargin: "-20% 0px -60% 0px", threshold: 0 }
+    );
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleNav = useCallback(
+    (href: string) => {
+      setMobileOpen(false);
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    []
+  );
 
   return (
     <>
@@ -44,10 +80,13 @@ export default function Navbar() {
           role="navigation"
           aria-label="Main navigation"
         >
-          <Link
+          <a
             href="#hero"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNav("#hero");
+            }}
             className="flex items-center gap-2 group"
-            onClick={() => setMobileOpen(false)}
           >
             <span className="relative w-9 h-9 rounded-lg overflow-hidden ring-2 ring-cyber-accent/30 group-hover:ring-cyber-accent transition-all">
               <Image
@@ -62,28 +101,48 @@ export default function Navbar() {
             <span className="font-bold text-white font-mono hidden sm:inline">
               Prasanta Ray
             </span>
-          </Link>
+          </a>
 
           {/* Desktop nav */}
           <ul className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <Link
+                <a
                   href={link.href}
-                  className="px-4 py-2 rounded-lg text-sm text-gray-400 hover:text-cyber-accent hover:bg-cyber-card/50 transition-colors font-mono"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav(link.href);
+                  }}
+                  className={`relative px-4 py-2 rounded-lg text-sm font-mono transition-colors ${
+                    activeSection === link.href
+                      ? "text-cyber-accent bg-cyber-card/50"
+                      : "text-gray-400 hover:text-cyber-accent hover:bg-cyber-card/50"
+                  }`}
+                  aria-current={activeSection === link.href ? "true" : undefined}
                 >
                   {link.label}
-                </Link>
+                  {activeSection === link.href && (
+                    <motion.span
+                      layoutId="nav-indicator"
+                      className="absolute bottom-0 left-2 right-2 h-0.5 bg-cyber-accent rounded-full"
+                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
               </li>
             ))}
           </ul>
 
-          <Link
+          <a
             href="#contact"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNav("#contact");
+            }}
             className="hidden md:inline-flex px-4 py-2 rounded-lg bg-cyber-accent text-cyber-dark font-semibold text-sm hover:bg-cyber-accentDim transition-colors"
           >
             Let&apos;s Connect
-          </Link>
+          </a>
 
           {/* Mobile menu button */}
           <button
@@ -110,23 +169,33 @@ export default function Navbar() {
             <ul className="container mx-auto px-6 py-4 space-y-1">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <Link
+                  <a
                     href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className="block px-4 py-3 rounded-lg text-gray-400 hover:text-cyber-accent hover:bg-cyber-card/50 transition-colors font-mono"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNav(link.href);
+                    }}
+                    className={`block px-4 py-3 rounded-lg font-mono transition-colors ${
+                      activeSection === link.href
+                        ? "text-cyber-accent bg-cyber-card/50"
+                        : "text-gray-400 hover:text-cyber-accent hover:bg-cyber-card/50"
+                    }`}
                   >
                     {link.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
               <li>
-                <Link
+                <a
                   href="#contact"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNav("#contact");
+                  }}
                   className="block px-4 py-3 rounded-lg bg-cyber-accent text-cyber-dark font-semibold text-center mt-2"
                 >
                   Let&apos;s Connect
-                </Link>
+                </a>
               </li>
             </ul>
           </motion.div>

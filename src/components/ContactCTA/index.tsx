@@ -7,7 +7,7 @@ import { personalEmail, ventures } from "@/constants/data";
 const quickLinks = [
   {
     label: "Email",
-    href: `mailto:${personalEmail}`,
+    href: `mailto:${personalEmail}?subject=${encodeURIComponent("Let's Connect — Portfolio Inquiry")}`,
     icon: Mail,
     primary: true,
   },

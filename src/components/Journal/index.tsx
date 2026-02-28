@@ -5,40 +5,14 @@ import { motion } from "framer-motion";
 import { FileText, ExternalLink, Loader2, Calendar } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { journalConfig } from "@/constants/data";
-
-interface GitHubIssue {
-  id: number;
-  title: string;
-  body: string | null;
-  html_url: string;
-  created_at: string;
-  labels: { name: string }[];
-}
-
-async function fetchJournalPosts(): Promise<GitHubIssue[]> {
-  try {
-    const labels = journalConfig.labels.join(",");
-    const url = `https://api.github.com/repos/${journalConfig.owner}/${journalConfig.repo}/issues?state=open&labels=${labels}&per_page=10&sort=created`;
-    const res = await fetch(url, {
-      headers: {
-        Accept: "application/vnd.github.v3+json",
-      },
-      next: { revalidate: 60 },
-    });
-    if (!res.ok) return [];
-    const data: GitHubIssue[] = await res.json();
-    return data.filter((i) => !i.title.startsWith("[WIP]"));
-  } catch {
-    return [];
-  }
-}
+import { getJournalPosts, type JournalPost } from "@/app/actions";
 
 export default function Journal() {
-  const [posts, setPosts] = useState<GitHubIssue[]>([]);
+  const [posts, setPosts] = useState<JournalPost[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchJournalPosts()
+    getJournalPosts()
       .then(setPosts)
       .finally(() => setLoading(false));
   }, []);
@@ -47,6 +21,7 @@ export default function Journal() {
     <section
       id="journal"
       className="relative py-24 px-6 bg-cyber-dark overflow-hidden scroll-mt-20"
+      aria-labelledby="journal-heading"
     >
       {/* Section header */}
       <motion.div
@@ -59,7 +34,10 @@ export default function Journal() {
         <span className="inline-block px-4 py-2 rounded-full bg-cyber-card/80 border border-cyber-border text-cyber-accent font-mono text-sm mb-4">
           DEV JOURNAL
         </span>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h2
+          id="journal-heading"
+          className="text-4xl md:text-5xl font-bold text-white mb-4"
+        >
           Thoughts & <span className="text-cyber-accent">Updates</span>
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
@@ -70,13 +48,27 @@ export default function Journal() {
 
       <div className="container mx-auto max-w-3xl">
         {loading ? (
-          <motion.div
-            className="flex justify-center py-16"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
-            <Loader2 className="w-10 h-10 text-cyber-accent animate-spin" />
-          </motion.div>
+          <div className="space-y-6">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={`journal-skeleton-${i}`}
+                className="p-6 md:p-8 rounded-2xl bg-cyber-card/40 border border-cyber-border"
+              >
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="h-6 w-2/3 rounded bg-cyber-border animate-pulse" />
+                  <div className="w-5 h-5 rounded bg-cyber-border/60 animate-pulse flex-shrink-0" />
+                </div>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="h-4 w-28 rounded bg-cyber-border/40 animate-pulse" />
+                </div>
+                <div className="space-y-2">
+                  <div className="h-3 w-full rounded bg-cyber-border/40 animate-pulse" />
+                  <div className="h-3 w-full rounded bg-cyber-border/40 animate-pulse" />
+                  <div className="h-3 w-3/4 rounded bg-cyber-border/40 animate-pulse" />
+                </div>
+              </div>
+            ))}
+          </div>
         ) : posts.length === 0 ? (
           <motion.div
             className="text-center py-16 px-6 rounded-2xl bg-cyber-card/40 border border-cyber-border"

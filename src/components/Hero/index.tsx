@@ -1,13 +1,29 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Sparkles } from "lucide-react";
 import dynamic from "next/dynamic";
 import { profile } from "@/constants/data";
 
 const Hero3D = dynamic(() => import("./Hero3D"), { ssr: false });
 
+const roles = [
+  "Founder @ Code Lith Labs",
+  "Backend Researcher",
+  "Co-Founder @ Stackveil",
+  "CSE Student @ CIT Kokrajhar",
+];
+
 export default function Hero() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <section
       id="hero"
@@ -54,6 +70,7 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
+              <span className="sr-only">Prasanta Ray — </span>
               Architecting the{" "}
               <span className="bg-gradient-to-r from-cyber-accent via-cyber-cyan to-cyber-purple bg-clip-text text-transparent">
                 Future
@@ -61,14 +78,20 @@ export default function Hero() {
               of Backends.
             </motion.h1>
 
-            <motion.p
-              className="text-lg sm:text-xl text-gray-400 mb-8 font-mono"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-            >
-              Founder @ Code Lith Labs | Student @ CIT Kokrajhar
-            </motion.p>
+            <div className="h-8 sm:h-9 overflow-hidden mb-8">
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={roleIndex}
+                  className="text-lg sm:text-xl text-gray-400 font-mono"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  {roles[roleIndex]}
+                </motion.p>
+              </AnimatePresence>
+            </div>
 
             <motion.div
               className="flex flex-wrap gap-4"

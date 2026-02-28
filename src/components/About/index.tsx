@@ -1,11 +1,31 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { MapPin, Calendar, GraduationCap, Cpu } from "lucide-react";
+import { MapPin, Calendar, GraduationCap, Cpu, Download } from "lucide-react";
 import { profile } from "@/constants/data";
+import { getGitHubUserStats } from "@/app/actions";
+import type { GitHubUser } from "@/lib/github";
 
 export default function About() {
+  const [gitHubUser, setGitHubUser] = useState<GitHubUser | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getGitHubUserStats();
+        setGitHubUser(data);
+      } catch (error) {
+        console.error("Failed to fetch GitHub user stats:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
   return (
     <section
       id="about"
@@ -81,6 +101,42 @@ export default function About() {
               </p>
             </motion.div>
 
+            {/* GitHub Stats */}
+            {gitHubUser && (
+              <motion.div
+                className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                <div className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center">
+                  <div className="text-2xl font-bold text-cyber-accent">
+                    {gitHubUser.public_repos}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">Repositories</div>
+                </div>
+                <div className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center">
+                  <div className="text-2xl font-bold text-cyber-cyan">
+                    {gitHubUser.followers}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">Followers</div>
+                </div>
+                <div className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center">
+                  <div className="text-2xl font-bold text-cyber-purple">
+                    {gitHubUser.following}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">Following</div>
+                </div>
+                <div className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center">
+                  <div className="text-2xl font-bold text-cyber-amber">
+                    {gitHubUser.public_gists}
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">Gists</div>
+                </div>
+              </motion.div>
+            )}
+
             {/* Meta info */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-gray-500">
               <span className="flex items-center gap-2">
@@ -100,6 +156,25 @@ export default function About() {
                 {profile.education.degree} ({profile.education.years})
               </span>
             </div>
+
+            {/* Resume download */}
+            <motion.div
+              className="mt-6"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.5 }}
+            >
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cyber-accent text-cyber-dark font-semibold hover:bg-cyber-accentDim transition-colors shadow-cyber"
+              >
+                <Download className="w-5 h-5" />
+                Download Resume
+              </a>
+            </motion.div>
           </div>
         </motion.div>
       </div>

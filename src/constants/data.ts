@@ -46,37 +46,54 @@ export const ventures = [
 ] as const;
 
 export const projects = [
+  // Legacy: Projects are now fetched dynamically from GitHub API.
+  // See src/app/actions.ts → getRepositories()
+] as const;
+
+export const skillGroups = [
   {
-    id: "vectordefense-core",
-    name: "VectorDefense-Core",
-    url: "https://github.com/CodelithLabs/VectorDefense-Core",
-    description: "Game Engine / C++",
-    owner: "CodelithLabs",
-    repo: "VectorDefense-Core",
+    label: "Backend & Systems",
+    icon: "server" as const,
+    items: [
+      { name: "C++", level: 85 },
+      { name: "Node.js", level: 80 },
+      { name: "REST APIs", level: 90 },
+      { name: "System Architecture", level: 75 },
+      { name: "Database Design", level: 70 },
+    ],
   },
   {
-    id: "smartcodementor",
-    name: "SmartCodeMentor",
-    url: "https://github.com/CodelithLabs/smartcodementor",
-    description: "AI-powered code mentorship",
-    owner: "CodelithLabs",
-    repo: "smartcodementor",
+    label: "Frontend & Frameworks",
+    icon: "code" as const,
+    items: [
+      { name: "TypeScript", level: 85 },
+      { name: "React", level: 80 },
+      { name: "Next.js", level: 80 },
+      { name: "Tailwind CSS", level: 90 },
+      { name: "HTML/CSS", level: 95 },
+    ],
   },
   {
-    id: "citk-connect",
-    name: "CITK-Connect",
-    url: "https://github.com/CodelithLabs/citk-connect-project",
-    description: "CIT Kokrajhar community platform",
-    owner: "CodelithLabs",
-    repo: "citk-connect-project",
+    label: "DevOps & Tools",
+    icon: "terminal" as const,
+    items: [
+      { name: "Git & GitHub", level: 90 },
+      { name: "Docker", level: 65 },
+      { name: "Linux", level: 70 },
+      { name: "CI/CD", level: 65 },
+      { name: "VS Code", level: 95 },
+    ],
   },
   {
-    id: "vectordefense-personal",
-    name: "VectorDefense-Core (Personal)",
-    url: "https://github.com/Prasanta-ray/VectorDefense-Core",
-    description: "Personal fork - Game Engine",
-    owner: "Prasanta-ray",
-    repo: "VectorDefense-Core",
+    label: "Research & Innovation",
+    icon: "cpu" as const,
+    items: [
+      { name: "Game Engines", level: 70 },
+      { name: "Backend R&D", level: 80 },
+      { name: "AI/Mentorship Tools", level: 60 },
+      { name: "Technical Writing", level: 75 },
+      { name: "Open Source", level: 85 },
+    ],
   },
 ] as const;
 

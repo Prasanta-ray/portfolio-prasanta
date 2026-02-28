@@ -29,6 +29,7 @@ export default function Ventures() {
     <section
       id="ventures"
       className="relative py-24 px-6 bg-cyber-surface overflow-hidden scroll-mt-20"
+      aria-labelledby="ventures-heading"
     >
       {/* Section header */}
       <motion.div
@@ -41,7 +42,10 @@ export default function Ventures() {
         <span className="inline-block px-4 py-2 rounded-full bg-cyber-card/80 border border-cyber-border text-cyber-accent font-mono text-sm mb-4">
           THE VENTURES
         </span>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h2
+          id="ventures-heading"
+          className="text-4xl md:text-5xl font-bold text-white mb-4"
+        >
           Building the{" "}
           <span className="text-cyber-accent">Future</span> of Tech
         </h2>

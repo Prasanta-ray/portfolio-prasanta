@@ -15,6 +15,7 @@ export default function Timeline() {
     <section
       id="timeline"
       className="relative py-24 px-6 bg-cyber-surface overflow-hidden scroll-mt-20"
+      aria-labelledby="timeline-heading"
     >
       {/* Section header */}
       <motion.div
@@ -27,7 +28,10 @@ export default function Timeline() {
         <span className="inline-block px-4 py-2 rounded-full bg-cyber-card/80 border border-cyber-border text-cyber-accent font-mono text-sm mb-4">
           THE JOURNEY
         </span>
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <h2
+          id="timeline-heading"
+          className="text-4xl md:text-5xl font-bold text-white mb-4"
+        >
           From <span className="text-cyber-purple">Controller</span> to{" "}
           <span className="text-cyber-accent">Server</span>
         </h2>

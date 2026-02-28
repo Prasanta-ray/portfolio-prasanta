@@ -79,7 +79,12 @@ function Scene() {
 
 export default function Hero3D() {
   return (
-    <div className="absolute inset-0 min-h-[400px] md:min-h-[600px] w-full md:w-1/2 md:right-0">
+    <div
+      className="absolute inset-0 min-h-[400px] md:min-h-[600px] w-full md:w-1/2 md:right-0"
+      aria-hidden="true"
+      role="img"
+      id="hero-3d-canvas"
+    >
       <Canvas
         camera={{ position: [0, 0, 6], fov: 45 }}
         gl={{ alpha: true, antialias: true }}
