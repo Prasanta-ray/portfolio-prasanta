@@ -53,6 +53,7 @@ export interface GitHubUser {
   public_gists: number;
   avatar_url: string;
   html_url: string;
+  created_at: string;
 }
 
 /**

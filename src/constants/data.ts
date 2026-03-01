@@ -3,9 +3,11 @@
  * Cyber-Industrial Professional Portfolio
  */
 
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://prasanta.codelithlabs.in";
+
 export const profile = {
   name: "Prasanta Ray",
-  aliases: ["Shaun the Sheep", "POE", "Bikki"],
   role: "Founder & CEO | Backend Researcher | CSE Diploma Student",
   location: "Kokrajhar, Assam, INDIA",
   timezone: "UTC +05:30",
@@ -25,7 +27,6 @@ export const ventures = [
     focus: "Research & Development, Backend Innovation",
     contact: {
       email: "team.codelithlabs@gmail.com",
-      phone: "+91 6002524400",
       discord: "https://discord.gg/kBKeCDD6vy",
       youtube: "@CodelithLabsOfficial",
     },
@@ -38,16 +39,10 @@ export const ventures = [
     focus: "Collaborative Tech Solutions & Architecture",
     contact: {
       email: "business.stack.veil@gmail.com",
-      phone: "+91 60019 94691",
       discord: "https://discord.gg/dVVX9sdC9h",
-      youtube: "@stackveilLabsofficial",
+      youtube: "@StackveilLabsOfficial",
     },
   },
-] as const;
-
-export const projects = [
-  // Legacy: Projects are now fetched dynamically from GitHub API.
-  // See src/app/actions.ts → getRepositories()
 ] as const;
 
 export const skillGroups = [
@@ -55,44 +50,44 @@ export const skillGroups = [
     label: "Backend & Systems",
     icon: "server" as const,
     items: [
-      { name: "C++", level: 85 },
-      { name: "Node.js", level: 80 },
-      { name: "REST APIs", level: 90 },
-      { name: "System Architecture", level: 75 },
-      { name: "Database Design", level: 70 },
+      { name: "C++", tier: "proficient" as const },
+      { name: "Node.js", tier: "proficient" as const },
+      { name: "REST APIs", tier: "proficient" as const },
+      { name: "System Architecture", tier: "familiar" as const },
+      { name: "Database Design", tier: "familiar" as const },
     ],
   },
   {
     label: "Frontend & Frameworks",
     icon: "code" as const,
     items: [
-      { name: "TypeScript", level: 85 },
-      { name: "React", level: 80 },
-      { name: "Next.js", level: 80 },
-      { name: "Tailwind CSS", level: 90 },
-      { name: "HTML/CSS", level: 95 },
+      { name: "TypeScript", tier: "proficient" as const },
+      { name: "React", tier: "proficient" as const },
+      { name: "Next.js", tier: "proficient" as const },
+      { name: "Tailwind CSS", tier: "proficient" as const },
+      { name: "HTML/CSS", tier: "proficient" as const },
     ],
   },
   {
     label: "DevOps & Tools",
     icon: "terminal" as const,
     items: [
-      { name: "Git & GitHub", level: 90 },
-      { name: "Docker", level: 65 },
-      { name: "Linux", level: 70 },
-      { name: "CI/CD", level: 65 },
-      { name: "VS Code", level: 95 },
+      { name: "Git & GitHub", tier: "proficient" as const },
+      { name: "Docker", tier: "familiar" as const },
+      { name: "Linux", tier: "familiar" as const },
+      { name: "CI/CD", tier: "familiar" as const },
+      { name: "VS Code", tier: "proficient" as const },
     ],
   },
   {
     label: "Research & Innovation",
     icon: "cpu" as const,
     items: [
-      { name: "Game Engines", level: 70 },
-      { name: "Backend R&D", level: 80 },
-      { name: "AI/Mentorship Tools", level: 60 },
-      { name: "Technical Writing", level: 75 },
-      { name: "Open Source", level: 85 },
+      { name: "Game Engines", tier: "familiar" as const },
+      { name: "Backend R&D", tier: "proficient" as const },
+      { name: "AI/Mentorship Tools", tier: "exploring" as const },
+      { name: "Technical Writing", tier: "familiar" as const },
+      { name: "Open Source", tier: "proficient" as const },
     ],
   },
 ] as const;

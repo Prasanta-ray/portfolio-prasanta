@@ -3,23 +3,21 @@ import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import CommandPalette from "@/components/CommandPalette";
 import BackToTop from "@/components/BackToTop";
+import { siteUrl } from "@/constants/data";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-geist-sans",
+  variable: "--font-space-grotesk",
   weight: ["400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-geist-mono",
+  variable: "--font-jetbrains-mono",
   weight: ["400", "500", "600", "700"],
 });
-
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://prasanta.codelithlabs.in";
 
 export const viewport: Viewport = {
   themeColor: "#00ff88",

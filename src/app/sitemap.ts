@@ -1,8 +1,5 @@
 import type { MetadataRoute } from "next";
-
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://prasanta.codelithlabs.in";
+import { siteUrl } from "@/constants/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [

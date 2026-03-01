@@ -9,6 +9,20 @@ import Journal from "@/components/Journal";
 import ContactCTA from "@/components/ContactCTA";
 import Footer from "@/components/Footer";
 
+/* Subtle gradient divider between sections */
+function SectionDivider({ flip = false }: { flip?: boolean }) {
+  return (
+    <div
+      className={`h-px w-full ${
+        flip
+          ? "bg-gradient-to-r from-transparent via-cyber-border to-transparent"
+          : "bg-gradient-to-r from-transparent via-cyber-accent/20 to-transparent"
+      }`}
+      aria-hidden="true"
+    />
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -21,12 +35,19 @@ export default function Home() {
       <Navbar />
       <main id="main-content" className="min-h-screen">
         <Hero />
+        <SectionDivider />
         <About />
+        <SectionDivider flip />
         <Ventures />
+        <SectionDivider />
         <Projects />
+        <SectionDivider flip />
         <Skills />
+        <SectionDivider />
         <Timeline />
+        <SectionDivider flip />
         <Journal />
+        <SectionDivider />
         <ContactCTA />
       </main>
       <Footer />

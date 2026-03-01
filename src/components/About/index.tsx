@@ -82,7 +82,7 @@ export default function About() {
               {profile.role}
             </p>
             <p className="text-gray-400 mb-6 leading-relaxed">
-              Tech Founder building the future of backend systems. From 15k-follower
+              Tech Founder building the future of backend systems. From 15K-follower
               streamer to CEO — bridging gaming culture with enterprise innovation
               through Code Lith Labs and Stackveil. Based in Kokrajhar, Assam.
             </p>
@@ -102,9 +102,21 @@ export default function About() {
             </motion.div>
 
             {/* GitHub Stats */}
-            {gitHubUser && (
+            {isLoading ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6">
+                {Array.from({ length: 3 }).map((_, i) => (
+                  <div
+                    key={`stat-skeleton-${i}`}
+                    className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center"
+                  >
+                    <div className="h-7 w-12 mx-auto rounded bg-cyber-border animate-pulse mb-2" />
+                    <div className="h-3 w-16 mx-auto rounded bg-cyber-border/40 animate-pulse" />
+                  </div>
+                ))}
+              </div>
+            ) : gitHubUser ? (
               <motion.div
-                className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6"
+                className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -124,18 +136,12 @@ export default function About() {
                 </div>
                 <div className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center">
                   <div className="text-2xl font-bold text-cyber-purple">
-                    {gitHubUser.following}
+                    {new Date(gitHubUser.created_at).getFullYear()}
                   </div>
-                  <div className="text-xs text-gray-500 mt-1">Following</div>
-                </div>
-                <div className="p-4 rounded-xl bg-cyber-card/30 border border-cyber-border/40 text-center">
-                  <div className="text-2xl font-bold text-cyber-amber">
-                    {gitHubUser.public_gists}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">Gists</div>
+                  <div className="text-xs text-gray-500 mt-1">On GitHub Since</div>
                 </div>
               </motion.div>
-            )}
+            ) : null}
 
             {/* Meta info */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-6 text-sm text-gray-500">

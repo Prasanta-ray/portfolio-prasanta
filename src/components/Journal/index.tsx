@@ -41,8 +41,7 @@ export default function Journal() {
           Thoughts & <span className="text-cyber-accent">Updates</span>
         </h2>
         <p className="text-gray-400 max-w-2xl mx-auto">
-          Markdown-powered. Create issues with label &quot;journal&quot; or
-          &quot;blog&quot; in the repo to auto-publish.
+          Reflections on building, learning, and shipping.
         </p>
       </motion.div>
 
@@ -125,7 +124,13 @@ export default function Journal() {
                 {post.body && (
                   <div className="prose prose-invert prose-sm max-w-none text-gray-300">
                     <ReactMarkdown>
-                      {`${post.body.slice(0, 500)}${post.body.length > 500 ? "..." : ""}`}
+                      {(() => {
+                        const raw = post.body;
+                        if (raw.length <= 400) return raw;
+                        const cut = raw.lastIndexOf("\n", 400);
+                        const end = cut > 200 ? cut : 400;
+                        return `${raw.slice(0, end)}\n\n...`;
+                      })()}
                     </ReactMarkdown>
                   </div>
                 )}

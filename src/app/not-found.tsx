@@ -2,13 +2,25 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Home, ArrowLeft } from "lucide-react";
+import { Home, ArrowLeft, Terminal } from "lucide-react";
 
 export default function NotFound() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-cyber-dark px-6">
+      {/* Background noise */}
+      <div className="absolute inset-0 opacity-10">
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,255,136,0.02) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(0,255,136,0.02) 1px, transparent 1px)`,
+            backgroundSize: "40px 40px",
+          }}
+        />
+      </div>
+
       <motion.div
-        className="text-center max-w-lg"
+        className="text-center max-w-lg relative z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -32,15 +44,31 @@ export default function NotFound() {
           Page not found
         </motion.p>
 
-        <motion.p
-          className="text-gray-500 mb-8 font-mono text-sm"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+        {/* Terminal-style message */}
+        <motion.div
+          className="mb-8 p-4 rounded-xl bg-cyber-card/60 border border-cyber-border text-left font-mono text-sm"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <span className="text-cyber-accent">&gt;</span> The resource you
-          requested doesn&apos;t exist or has been moved.
-        </motion.p>
+          <div className="flex items-center gap-2 mb-3 text-gray-500 text-xs">
+            <Terminal className="w-3.5 h-3.5" />
+            <span>terminal</span>
+          </div>
+          <p className="text-gray-400">
+            <span className="text-cyber-accent">$</span> curl{" "}
+            <span className="text-cyber-cyan">
+              {typeof window !== "undefined" ? window.location.pathname : "/unknown"}
+            </span>
+          </p>
+          <p className="text-red-400 mt-1">
+            Error: ENOENT — resource not found or has been moved.
+          </p>
+          <p className="text-gray-500 mt-1">
+            <span className="text-cyber-accent">$</span>{" "}
+            <span className="animate-pulse">_</span>
+          </p>
+        </motion.div>
 
         <motion.div
           className="flex flex-wrap justify-center gap-4"

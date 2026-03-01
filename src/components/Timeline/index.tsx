@@ -41,9 +41,9 @@ export default function Timeline() {
       </motion.div>
 
       <div className="container mx-auto max-w-3xl">
-        <div className="relative pl-14 md:pl-0">
-          {/* Vertical line - desktop center */}
-          <div className="absolute left-[27px] top-0 bottom-0 w-px bg-cyber-border hidden md:block md:left-1/2 md:-translate-x-px" />
+        <div className="relative">
+          {/* Vertical line — mobile left, desktop center */}
+          <div className="absolute left-7 top-0 bottom-0 w-px bg-gradient-to-b from-cyber-purple via-cyber-amber to-cyber-accent md:left-1/2 md:-translate-x-px" />
 
           {timeline.map((item, i) => {
             const Icon = icons[item.icon as keyof typeof icons] ?? ArrowRight;
@@ -52,7 +52,7 @@ export default function Timeline() {
             return (
               <motion.div
                 key={item.id}
-                className={`relative flex items-start md:items-center gap-4 py-8 first:pt-0 last:pb-0 ${
+                className={`relative flex items-start gap-4 py-8 first:pt-0 last:pb-0 md:items-center ${
                   isLeft ? "md:flex-row" : "md:flex-row-reverse"
                 }`}
                 initial={{ opacity: 0, y: 20 }}
@@ -61,9 +61,9 @@ export default function Timeline() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
               >
                 {/* Icon node */}
-                <div className="absolute left-0 md:left-1/2 md:-translate-x-1/2 w-14 h-14 flex items-center justify-center z-10 flex-shrink-0">
+                <div className="absolute left-0 z-10 flex-shrink-0 md:left-1/2 md:-translate-x-1/2">
                   <motion.div
-                    className={`p-3 rounded-full border-2 ${
+                    className={`w-14 h-14 flex items-center justify-center rounded-full border-2 ${
                       item.era === "gaming"
                         ? "bg-cyber-purple/20 border-cyber-purple"
                         : item.era === "dev"
@@ -84,9 +84,9 @@ export default function Timeline() {
                   </motion.div>
                 </div>
 
-                {/* Content card - takes half width on desktop */}
+                {/* Content card — pushed right of icon on mobile, alternating on desktop */}
                 <div
-                  className={`flex-1 min-w-0 pl-0 md:w-1/2 ${
+                  className={`ml-20 flex-1 min-w-0 md:ml-0 md:w-1/2 ${
                     isLeft ? "md:pr-12 md:text-right" : "md:pl-12"
                   }`}
                 >

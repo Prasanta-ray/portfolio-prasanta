@@ -5,7 +5,6 @@ import {
   Building2,
   ExternalLink,
   Mail,
-  Phone,
   MessageCircle,
   Youtube,
 } from "lucide-react";
@@ -28,7 +27,7 @@ export default function Ventures() {
   return (
     <section
       id="ventures"
-      className="relative py-24 px-6 bg-cyber-surface overflow-hidden scroll-mt-20"
+      className="relative py-24 px-6 bg-cyber-dark overflow-hidden scroll-mt-20"
       aria-labelledby="ventures-heading"
     >
       {/* Section header */}
@@ -112,13 +111,6 @@ export default function Ventures() {
                   <span className="truncate">{venture.contact.email}</span>
                 </a>
                 <a
-                  href={`tel:${venture.contact.phone.replace(/\s/g, "")}`}
-                  className="flex items-center gap-2 text-gray-400 hover:text-cyber-accent transition-colors"
-                >
-                  <Phone className="w-4 h-4 flex-shrink-0" />
-                  <span>{venture.contact.phone}</span>
-                </a>
-                <a
                   href={venture.contact.discord}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -127,10 +119,15 @@ export default function Ventures() {
                   <MessageCircle className="w-4 h-4 flex-shrink-0" />
                   <span>Discord Community</span>
                 </a>
-                <div className="flex items-center gap-2 text-gray-400">
+                <a
+                  href={`https://youtube.com/${venture.contact.youtube}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-gray-400 hover:text-cyber-accent transition-colors"
+                >
                   <Youtube className="w-4 h-4 flex-shrink-0" />
                   <span>{venture.contact.youtube}</span>
-                </div>
+                </a>
               </div>
 
               {/* Accent line */}

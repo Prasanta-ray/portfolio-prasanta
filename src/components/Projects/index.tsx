@@ -28,7 +28,7 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="relative py-24 px-6 bg-cyber-dark overflow-hidden scroll-mt-20"
+      className="relative py-24 px-6 bg-cyber-surface overflow-hidden scroll-mt-20"
       aria-labelledby="projects-heading"
     >
       {/* Section header */}
@@ -130,6 +130,26 @@ export default function Projects() {
             </motion.div>
           )}
         </div>
+
+        {/* View all link */}
+        {repos.length > 0 && (
+          <motion.div
+            className="text-center mt-10"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <a
+              href="https://github.com/Prasanta-ray"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-cyber-accent hover:underline font-mono text-sm"
+            >
+              View all repositories on GitHub
+              <ExternalLink className="w-4 h-4" />
+            </a>
+          </motion.div>
+        )}
       </div>
     </section>
   );

@@ -78,7 +78,7 @@ export default function Hero() {
               of Backends.
             </motion.h1>
 
-            <div className="h-8 sm:h-9 overflow-hidden mb-8">
+            <div className="min-h-[2rem] sm:min-h-[2.25rem] overflow-hidden mb-8">
               <AnimatePresence mode="wait">
                 <motion.p
                   key={roleIndex}
@@ -89,6 +89,7 @@ export default function Hero() {
                   transition={{ duration: 0.3 }}
                 >
                   {roles[roleIndex]}
+                  <span className="inline-block w-[2px] h-5 ml-1 bg-cyber-accent align-middle animate-pulse" />
                 </motion.p>
               </AnimatePresence>
             </div>
@@ -100,27 +101,27 @@ export default function Hero() {
               transition={{ delay: 0.6 }}
             >
               <motion.a
-                href="#ventures"
+                href="#projects"
                 className="px-6 py-3 rounded-lg bg-cyber-accent text-cyber-dark font-semibold hover:bg-cyber-accentDim transition-colors shadow-cyber"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Explore Ventures
+                View Projects
               </motion.a>
               <motion.a
-                href="#journal"
+                href="#about"
                 className="px-6 py-3 rounded-lg bg-cyber-card/80 backdrop-blur-md border border-cyber-border text-cyber-accent font-semibold hover:bg-cyber-card transition-colors"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Read Journal
+                About Me
               </motion.a>
             </motion.div>
           </motion.div>
 
-          {/* 3D Canvas */}
+          {/* 3D Canvas — single responsive instance */}
           <motion.div
-            className="hidden md:block flex-1 h-[400px] md:h-[500px] lg:h-[600px] relative"
+            className="flex-1 h-[300px] md:h-[500px] lg:h-[600px] relative"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
@@ -128,16 +129,6 @@ export default function Hero() {
             <Hero3D />
           </motion.div>
         </div>
-
-        {/* Mobile 3D - smaller */}
-        <motion.div
-          className="md:hidden h-[300px] relative mt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-        >
-          <Hero3D />
-        </motion.div>
       </div>
 
       {/* Scroll indicator */}
@@ -148,7 +139,7 @@ export default function Hero() {
         transition={{ delay: 1 }}
       >
         <motion.a
-          href="#ventures"
+          href="#about"
           className="flex flex-col items-center gap-2 text-gray-500 hover:text-cyber-accent transition-colors"
           animate={{ y: [0, 8, 0] }}
           transition={{ repeat: Infinity, duration: 2 }}

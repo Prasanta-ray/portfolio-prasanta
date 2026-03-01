@@ -9,6 +9,10 @@ import {
   Github,
   Mail,
   ExternalLink,
+  Home,
+  User,
+  Zap,
+  MessageCircle,
 } from "lucide-react";
 
 const actions: {
@@ -18,10 +22,14 @@ const actions: {
   icon: React.ComponentType<{ className?: string }>;
   external?: boolean;
 }[] = [
+  { id: "home", label: "Go Home", href: "#hero", icon: Home },
+  { id: "about", label: "About Me", href: "#about", icon: User },
   { id: "ventures", label: "Go to Ventures", href: "#ventures", icon: Building2 },
   { id: "projects", label: "View Projects", href: "#projects", icon: Github },
-  { id: "journal", label: "Read Journal", href: "#journal", icon: FileText },
+  { id: "skills", label: "View Skills", href: "#skills", icon: Zap },
   { id: "timeline", label: "View Timeline", href: "#timeline", icon: Gamepad2 },
+  { id: "journal", label: "Read Journal", href: "#journal", icon: FileText },
+  { id: "contact", label: "Contact", href: "#contact", icon: MessageCircle },
   {
     id: "codelith",
     label: "Code Lith Labs",
@@ -56,6 +64,7 @@ export default function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(0);
+  const [isMac, setIsMac] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const filtered = actions.filter((a) =>
@@ -73,6 +82,12 @@ export default function CommandPalette() {
     });
   }, []);
 
+  /* Detect platform */
+  useEffect(() => {
+    setIsMac(/Mac|iPhone|iPad/.test(navigator.userAgent));
+  }, []);
+
+  /* Ctrl/Cmd + K to toggle */
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
@@ -83,6 +98,16 @@ export default function CommandPalette() {
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
   }, [toggle]);
+
+  /* Global Escape when open */
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [open]);
 
   useEffect(() => {
     if (open) setSelected(0);
@@ -98,10 +123,6 @@ export default function CommandPalette() {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      setOpen(false);
-      return;
-    }
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelected((s) => (s + 1) % Math.max(1, filtered.length));
@@ -123,9 +144,9 @@ export default function CommandPalette() {
     <>
       <button
         onClick={toggle}
-        className="fixed bottom-6 right-6 z-40 px-4 py-2 rounded-lg bg-cyber-card/80 backdrop-blur-md border border-cyber-border text-gray-400 text-sm font-mono hover:border-cyber-accent/50 hover:text-cyber-accent transition-all hidden sm:flex items-center gap-2"
+        className="fixed bottom-6 left-6 z-40 px-4 py-2 rounded-lg bg-cyber-card/80 backdrop-blur-md border border-cyber-border text-gray-400 text-sm font-mono hover:border-cyber-accent/50 hover:text-cyber-accent transition-all hidden sm:flex items-center gap-2"
       >
-        <span>⌘K</span>
+        <span>{isMac ? "⌘K" : "Ctrl+K"}</span>
         <span>Command</span>
       </button>
 
@@ -133,6 +154,9 @@ export default function CommandPalette() {
         <div
           className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-[15vh] px-4"
           onClick={() => setOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Command palette"
         >
           <div
             className="w-full max-w-lg rounded-2xl bg-cyber-card/95 backdrop-blur-xl border border-cyber-border shadow-2xl overflow-hidden"

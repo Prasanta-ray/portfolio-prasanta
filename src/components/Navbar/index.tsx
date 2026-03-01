@@ -27,6 +27,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   // Scroll-spy: track which section is currently in view
   useEffect(() => {
     const sectionIds = navLinks.map((l) => l.href.replace("#", ""));
@@ -118,7 +130,7 @@ export default function Navbar() {
                       ? "text-cyber-accent bg-cyber-card/50"
                       : "text-gray-400 hover:text-cyber-accent hover:bg-cyber-card/50"
                   }`}
-                  aria-current={activeSection === link.href ? "true" : undefined}
+                  aria-current={activeSection === link.href ? "page" : undefined}
                 >
                   {link.label}
                   {activeSection === link.href && (

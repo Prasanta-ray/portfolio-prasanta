@@ -11,11 +11,26 @@ const iconMap = {
   terminal: Terminal,
 } as const;
 
+const tierStyles = {
+  proficient: {
+    label: "Proficient",
+    className: "text-cyber-accent border-cyber-accent/40 bg-cyber-accent/10",
+  },
+  familiar: {
+    label: "Familiar",
+    className: "text-cyber-cyan border-cyber-cyan/40 bg-cyber-cyan/10",
+  },
+  exploring: {
+    label: "Exploring",
+    className: "text-cyber-purple border-cyber-purple/40 bg-cyber-purple/10",
+  },
+} as const;
+
 export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative py-24 px-6 bg-cyber-surface overflow-hidden scroll-mt-20"
+      className="relative py-24 px-6 bg-cyber-dark overflow-hidden scroll-mt-20"
       aria-labelledby="skills-heading"
     >
       <div className="container mx-auto max-w-5xl">
@@ -27,7 +42,7 @@ export default function Skills() {
           transition={{ duration: 0.5 }}
         >
           <span className="inline-block px-4 py-2 rounded-full bg-cyber-card/80 border border-cyber-border text-cyber-accent font-mono text-sm mb-4">
-            EXPERTISE
+            SKILLS
           </span>
           <h2
             id="skills-heading"
@@ -59,29 +74,26 @@ export default function Skills() {
                   </div>
                   <h3 className="text-lg font-bold text-white">{group.label}</h3>
                 </div>
-                <ul className="space-y-3">
-                  {group.items.map((item) => (
-                    <li key={item.name}>
-                      <div className="flex items-center justify-between mb-1">
+                <ul className="space-y-2.5">
+                  {group.items.map((item) => {
+                    const tier = tierStyles[item.tier];
+                    return (
+                      <li
+                        key={item.name}
+                        className="flex items-center justify-between"
+                      >
                         <span className="text-gray-400 text-sm flex items-center gap-2">
                           <span className="text-cyber-accent font-mono">→</span>
                           {item.name}
                         </span>
-                        <span className="text-xs text-gray-500 font-mono">
-                          {item.level}%
+                        <span
+                          className={`px-2 py-0.5 text-xs font-mono rounded-full border ${tier.className}`}
+                        >
+                          {tier.label}
                         </span>
-                      </div>
-                      <div className="h-1.5 w-full rounded-full bg-cyber-border/60 overflow-hidden">
-                        <motion.div
-                          className="h-full rounded-full bg-gradient-to-r from-cyber-accent to-cyber-cyan"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${item.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{ duration: 0.8, delay: 0.2 }}
-                        />
-                      </div>
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
               </motion.div>
             );
