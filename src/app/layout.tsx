@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import CommandPalette from "@/components/CommandPalette";
 import BackToTop from "@/components/BackToTop";
@@ -235,6 +236,7 @@ export default function RootLayout({
         {children}
         <CommandPalette />
         <BackToTop />
+        <Analytics />
         <noscript>
           <div style={{ padding: "2rem", textAlign: "center", color: "#d1d5db" }}>
             <h1>Prasanta Ray — Portfolio</h1>
